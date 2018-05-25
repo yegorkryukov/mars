@@ -1,6 +1,10 @@
 from flask import Flask
 from datetime import datetime
+import pymongo
+
+# change to scrape before production run
 from scrape_mars import scrape1
+import pymongo
 app = Flask(__name__)
 
 @app.route('/')

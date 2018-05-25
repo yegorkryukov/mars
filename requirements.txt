@@ -1,4 +1,7 @@
 Flask
 gunicorn
+bs4
+splinter 
+pandas
 
 
