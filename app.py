@@ -1,10 +1,18 @@
 from flask import Flask
 from datetime import datetime
 import pymongo
-
 # change to scrape before production run
 from scrape_mars import scrape1
-import pymongo
+
+# Initialize PyMongo to work with MongoDBs
+conn = 'mongodb://localhost:27017'
+client = pymongo.MongoClient(conn)
+
+# Define database and collection
+db = client.mars_scrape
+collection = db.results
+
+# initialize Flask app
 app = Flask(__name__)
 
 @app.route('/')

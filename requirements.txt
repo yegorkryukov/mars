@@ -3,5 +3,6 @@ gunicorn
 bs4
 splinter 
 pandas
+pymongo
 
 
