@@ -4,5 +4,6 @@ bs4
 splinter 
 pandas
 pymongo
+selenium
 
 
