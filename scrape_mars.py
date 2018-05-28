@@ -6,6 +6,7 @@ def scrape():
     # Dependencies
     from bs4 import BeautifulSoup
     from splinter import Browser
+    from selenium.webdriver.chrome.options import Options
     import pandas as pd
 
     #setup resulting dict
@@ -15,12 +16,27 @@ def scrape():
     # SCRAPE LATEST NEWS
     #--------------------------------------------
 
-    # https://splinter.readthedocs.io/en/latest/drivers/chrome.html
-    get_ipython().system('which chromedriver')
+    # get_ipython().system('which chromedriver')
+    # heroku enviroment variables available
+    # CHROMEDRIVER_PATH: /app/.chromedriver/bin/chromedriver
+    # GOOGLE_CHROME_BIN: /app/.apt/usr/bin/google-chrome
+    
+    # changing them for local testing, comment to run on heroku
+    CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+    GOOGLE_CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
-    # have to run browser object
-    executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
-    browser = Browser('chrome', **executable_path, headless=False)
+    # set options for chrome driver
+    chrome_options = Options()
+    chrome_options.binary_location = GOOGLE_CHROME_BIN
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--headless')
+
+    # set path to the driver
+    executable_path = {'executable_path': CHROMEDRIVER_PATH}
+
+    # launch splinter browser object
+    browser = Browser('chrome', executable_path, chrome_options=chrome_options)
 
     # URL of NASA's mars news
     url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
@@ -41,6 +57,9 @@ def scrape():
     results['news_title'] = news_title
     results['news_p']     = news_p
 
+    # print to console
+    print(f'Scraped: {news_title} as of {news_date}')
+    print(f'Results lenght: {len(results)}')
 
     #--------------------------------------------
     # SCRAPE FEATURED IMAGE
@@ -63,6 +82,9 @@ def scrape():
     featured_image_url = url[:-1] + soup.find('article', class_='carousel_item')['style'].split("'")[1]
     results['featured_image_url'] = featured_image_url
 
+    # print to console
+    print(f'Scraped: {featured_image_url}')
+    print(f'Results lenght: {len(results)}')
 
     #--------------------------------------------
     # SCRAPE MARS'S WEATHER
@@ -81,6 +103,9 @@ def scrape():
     mars_weather = soup.find('div', class_='js-tweet-text-container').text.split('\n')[1]
     results['mars_weather'] = mars_weather
 
+    # print to console
+    print(f'Scraped: {mars_weather}')
+    print(f'Results lenght: {len(results)}')
 
     #--------------------------------------------
     # SCRAPE MARS'S FACTS
@@ -101,6 +126,9 @@ def scrape():
 
     results['facts_table'] = facts_table
 
+    # print to console
+    print(f'Scraped: {facts_table[:20]}..')
+    print(f'Results lenght: {len(results)}')
 
     #--------------------------------------------
     # SCRAPE HEMISPHERES' IMAGES
@@ -146,5 +174,10 @@ def scrape():
 
     results['hemisphere_image_urls'] = hemisphere_image_urls
     
+    # print to console
+    print(f'Scraped: hemisphere_image_urls')
+    print(f'Results lenght: {len(results)}')
+
     return results
 
+print(scrape())
