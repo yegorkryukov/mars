@@ -22,8 +22,8 @@ def scrape():
     # GOOGLE_CHROME_BIN: /app/.apt/usr/bin/google-chrome
     
     # changing them for local testing, comment to run on heroku
-    CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
-    GOOGLE_CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+    #CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+    #GOOGLE_CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
     # set options for chrome driver
     chrome_options = Options()
