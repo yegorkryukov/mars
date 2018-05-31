@@ -1,5 +1,5 @@
-def scrape1():
-    return {'result':'test function works'}
+'''def scrape1():
+    return {'result':'test function works'}'''
 
 
 def scrape():
@@ -177,4 +177,4 @@ def scrape():
 
     return results
 
-print(scrape())
+#print(scrape())

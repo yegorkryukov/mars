@@ -1,12 +1,12 @@
 from flask import Flask
 from datetime import datetime
 import pymongo
-# change to scrape before production run
 from scrape_mars import scrape
+import os
 
 # Initialize PyMongo to work with MongoDBs
-# uncomment needed
-#conn = 'mongodb://localhost:27017' # connection to local db
+MONGODB_URI = os.environ.get('MONGODB_URI')
+print(f'\n######## MONGODB_URI: {MONGODB_URI}\n')
 conn = MONGODB_URI # connection to heroku addon
 client = pymongo.MongoClient(conn)
 
