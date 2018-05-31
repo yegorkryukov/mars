@@ -13,15 +13,10 @@ def scrape():
     #setup resulting dict
     results = {}
 
-    # detect whether the app runs on heroku or locally to setup vars
-    is_prod = os.environ.get('IS_HEROKU', None)
-    print(f'is_prod: {is_prod}')
-    if is_prod: # heroku enviroment variables available
-        os.environ.get('CHROMEDRIVER_PATH')
-        os.environ.get('GOOGLE_CHROME_BIN')
-    else: # local vars
-        CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
-        GOOGLE_CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+    CHROMEDRIVER_PATH = os.environ.get('CHROMEDRIVER_PATH')
+    print(f'\n######## CHROMEDRIVER_PATH: {CHROMEDRIVER_PATH}\n')
+    GOOGLE_CHROME_BIN = os.environ.get('GOOGLE_CHROME_BIN')
+    print(f'\n######## GOOGLE_CHROME_BIN: {GOOGLE_CHROME_BIN}\n')
 
     #--------------------------------------------
     # SCRAPE LATEST NEWS
