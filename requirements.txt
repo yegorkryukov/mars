@@ -5,6 +5,6 @@ splinter
 pandas
 pymongo
 selenium
-os
+#os
 
 
