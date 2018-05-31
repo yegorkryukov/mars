@@ -8,22 +8,24 @@ def scrape():
     from splinter import Browser
     from selenium.webdriver.chrome.options import Options
     import pandas as pd
+    import os
 
     #setup resulting dict
     results = {}
 
+    # detect whether the app runs on heroku or locally to setup vars
+    is_prod = os.environ.get('IS_HEROKU', None)
+    print(f'is_prod: {is_prod}')
+    if is_prod: # heroku enviroment variables available
+        os.environ.get('CHROMEDRIVER_PATH')
+        os.environ.get('GOOGLE_CHROME_BIN')
+    else: # local vars
+        CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+        GOOGLE_CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+
     #--------------------------------------------
     # SCRAPE LATEST NEWS
     #--------------------------------------------
-
-    # get_ipython().system('which chromedriver')
-    # heroku enviroment variables available
-    # CHROMEDRIVER_PATH: /app/.chromedriver/bin/chromedriver
-    # GOOGLE_CHROME_BIN: /app/.apt/usr/bin/google-chrome
-    
-    # changing them for local testing, comment to run on heroku
-    #CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
-    #GOOGLE_CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
     # set options for chrome driver
     chrome_options = Options()
