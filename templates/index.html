@@ -2,35 +2,160 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- autorefresh for development -->
+    <!-- <meta http-equiv="refresh" content="3" > -->
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta charset="utf-8">
+    <!-- Description, Keywords and Author -->
+    <meta name="description" content="Latest news on Mars scraper project for GW Data Analytics Bootcamp">
+    <meta name="author" content="Yegor Kryukov">
+    <title>:: Latest news on Mars ::</title>
+    <!-- <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"> -->
+    <!-- style -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/bootstrap.min.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/responsive.css') }}">
+    <!-- font-awesome -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/font-awesome.min.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/effects/set2.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/effects/normalize.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/effects/component.css') }}">
+
 </head>
 
 <body>
 
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Mars</h1>
-            <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get data!</a></p>
+    <!-- header -->
+    <header role="header">
+            <div class="container">
+                <!-- logo -->
+                    <h1>
+                        <a href="/" title="MindThatData"><p>mars.mindthatdata.com</p></a>
+                    </h1>
+                <!-- logo -->
 
-        </div>
-
-           
-        <div class="col-lg-4">
-            <div class="card" style="width: 20rem;">
-                <div class="card-body">
-                    <h4 class="card-title">{{data.news_title }}</h4>
-                    <h6 class="card-subtitle mb-2 text-muted">{{data.news_date}}</h6>
-                    <p class="card-text">{{data.news_p}}</p>
-                </div>
+                <!-- nav -->
+                <nav role="header-nav" class="navy">
+                    <ul>
+                        <li class="nav-active"><a href="/scrape" title="Work">Scrape</a></li>
+                        <li><a href="/about.html" title="About">About</a></li>
+                        <li><a href="/contact.html" title="Contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <!-- nav -->
             </div>
+        </header>
+    <!-- header -->
+
+    <!-- main -->
+    <main role="main-home-wrapper" class="container">
+        <div class="row">
+
+            <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+                <article role="pge-title-content">
+                    <header>
+                        <h2><span>Mars</span> Get the latest</h2>
+                    </header>
+                    <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Update</a></p>
+                </article>
+            </section>   
+            
+            <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
+                <figure class="effect-oscar">
+                    <img src="{{data.featured_image_url}}" alt="" class="img-responsive"/>
+                    <figcaption>
+                        <h2>Featured<span> Image</span></h2>
+                        <p>from jpl.nasa.gov</p>
+                        <p>click for full size</p>
+                        <a href="{{data.featured_image_url}}" target="_blank">full size</a>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <div class="clearfix"></div>
+
+            <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
+                <ul class="grid-lod effect-2" id="grid">
+                    <li>
+                        <article class="about-content">
+                            <h2>Mars<span>Facts</span></h2>
+                            <!-- 'safe' flag tells jinja template engine to trust html and render -->
+                            {{table | safe}}
+                        </article>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
+                <ul class="grid-lod effect-2" id="grid">
+                    <li>
+                        <!-- <article class="about-content"> -->
+                            <h2>News</h2>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{data.news_title }}</h4>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{data.news_date}}</h6>
+                                    <p class="card-text">{{data.news_p}}</p>
+                                </div>
+                            </div>
+                        <!-- </article> -->
+                    </li>
+                    <li>
+                        <!-- <article class="about-content"> -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Current weather on Mars</h4>
+                                    <p class="card-text">{{data.mars_weather}}</p>
+                                </div>
+                            </div>
+                        <!-- </article> -->
+                    </li>
+                </ul>
+            </section>
+
+            <div class="clearfix"></div>
+
         </div>
 
+        <div class="row">
+            <h1>Mars Hemispheres</h1>
+            {% for image in data.hemisphere_image_urls %}
+            <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
+                <figure class="effect-oscar">
+                    <img src="{{image.img_url_jpeg}}" alt="" class="img-responsive"/>
+                    <figcaption>
+                        <h2><span>{{image.title}}</span></h2>
+                        <p>from astrogeology.usgs.gov</p>
+                        <p>click for full size</p>
+                        <a href="{{image.img_url}}" target="_blank">full size</a>
+                    </figcaption>
+                </figure>
+            </section>
+            {% endfor %}
+        </div>
+    </main>
 
-    </div>
+    <!-- main -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="static/js/jquery.min.js" type="text/javascript"></script>
+    <!-- custom -->
+    <script src="static/js/nav.js" type="text/javascript"></script>
+    <script src="static/js/custom.js" type="text/javascript"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="static/js/effects/masonry.pkgd.min.js"  type="text/javascript"></script>
+    <script src="static/js/effects/imagesloaded.js"  type="text/javascript"></script>
+    <script src="static/js/effects/classie.js"  type="text/javascript"></script>
+    <script src="static/js/effects/AnimOnScroll.js"  type="text/javascript"></script>
+    <script src="static/js/effects/modernizr.custom.js"></script>
+
+    <!-- jquery.countdown -->
+    <script src="static/js/html5shiv.js" type="text/javascript"></script>
 
 </body>
 

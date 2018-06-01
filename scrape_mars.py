@@ -41,7 +41,7 @@ def scrape():
     # launch browser
     browser.visit(url)
     #check if the page has been loaded
-    browser.is_element_present_by_tag('div', wait_time=10)
+    browser.is_element_present_by_name('list_date', wait_time=10)
 
     # create beautifulsoup object
     soup = BeautifulSoup(browser.html, 'html.parser')

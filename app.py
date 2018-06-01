@@ -18,8 +18,12 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     data = collection.find_one()
-    #print(data)
-    return render_template("index.html", data=data)
+    #extract table html from string
+    table = data['facts_table']
+    #replace class and other style params to pickup bootstrap
+    table = table.replace('dataframe','table').replace('style="text-align: right;','style="text-align: center;')
+    #print(type(data.facts_table))
+    return render_template("index.html", data=data, table=table)
 
 @app.route('/scrape')
 def do_scrape(): 
