@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, redirect
 from datetime import datetime
 import pymongo
 from scrape_mars import scrape
@@ -16,12 +16,10 @@ collection = db.mars_scrape
 app = Flask(__name__)
 
 @app.route('/')
-def homepage():
-    data = collection.find()
-    print(data)
-    return f"""
-    <h1>Data in the DB:</h1> {str(data[0])}
-    """
+def index():
+    data = collection.find_one()
+    #print(data)
+    return render_template("index.html", data=data)
 
 @app.route('/scrape')
 def do_scrape(): 
@@ -33,7 +31,7 @@ def do_scrape():
 
     # Insert newly obtained data into the db
     collection.insert_one(results)
-    return f'Scrape finished. This was inserted into db\n {results}'
+    return redirect("/", code=302)
 
 
 if __name__ == '__main__':
