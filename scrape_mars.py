@@ -40,6 +40,8 @@ def scrape():
 
     # launch browser
     browser.visit(url)
+    #check if the page has been loaded
+    browser.is_element_present_by_tag('div', wait_time=10)
 
     # create beautifulsoup object
     soup = BeautifulSoup(browser.html, 'html.parser')
@@ -57,7 +59,7 @@ def scrape():
     # print to console
     print(f'Scraped: {news_title} as of {news_date}')
     print(f'Results lenght: {len(results)}')
-
+    
     #--------------------------------------------
     # SCRAPE FEATURED IMAGE
     #--------------------------------------------
@@ -68,6 +70,8 @@ def scrape():
 
     # launch browser
     browser.visit(url+url1)
+    #check if the page has been loaded
+    browser.is_element_present_by_tag('article', wait_time=3)
 
     # create beautifulsoup object
     soup = BeautifulSoup(browser.html, 'html.parser')
@@ -92,6 +96,8 @@ def scrape():
 
     # launch browser
     browser.visit(url)
+    #check if the page has been loaded
+    browser.is_element_present_by_tag('div', wait_time=3)
 
     # create beautifulsoup object
     soup = BeautifulSoup(browser.html, 'html.parser')
@@ -137,6 +143,8 @@ def scrape():
 
     # launch browser
     browser.visit(url+url1)
+    #check if the page has been loaded
+    browser.is_element_present_by_tag('div', wait_time=3)
 
     # create beautifulsoup object
     soup = BeautifulSoup(browser.html, 'html.parser')
@@ -156,6 +164,8 @@ def scrape():
     for u in urls:
         result_dict = {}
         browser.visit(url+u)
+        #check if the page has been loaded
+        browser.is_element_present_by_tag('div', wait_time=3)
         soup = BeautifulSoup(browser.html, 'html.parser')
 
         # find and extract links to images
@@ -174,6 +184,8 @@ def scrape():
     # print to console
     print(f'Scraped: hemisphere_image_urls')
     print(f'Results lenght: {len(results)}')
+    
+    browser.quit()
 
     return results
 
