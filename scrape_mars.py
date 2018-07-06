@@ -1,7 +1,3 @@
-'''def scrape1():
-    return {'result':'test function works'}'''
-
-
 def scrape():
     # Dependencies
     from bs4 import BeautifulSoup
