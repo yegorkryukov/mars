@@ -1,10 +1,10 @@
 def scrape():
     # Dependencies
-    from bs4 import BeautifulSoup
     from splinter import Browser
     from selenium.webdriver.chrome.options import Options
     import pandas as pd
     import os
+    import bs4 as bs
 
     #setup resulting dict
     results = {}
@@ -40,7 +40,7 @@ def scrape():
     browser.is_element_present_by_name('list_date', wait_time=10)
 
     # create beautifulsoup object
-    soup = BeautifulSoup(browser.html, 'html.parser')
+    soup = bs.BeautifulSoup(browser.html, 'lxml')
 
     # find latest news date, title and body (first appearanse of a tag in html)
     news_date = soup.find('div', class_='list_date').text
@@ -70,7 +70,7 @@ def scrape():
     browser.is_element_present_by_tag('article', wait_time=3)
 
     # create beautifulsoup object
-    soup = BeautifulSoup(browser.html, 'html.parser')
+    soup = bs.BeautifulSoup(browser.html, 'html.parser')
 
     # remove last '/' symbol from url
     # locate the 'style' attribute of 'article' tag
@@ -96,7 +96,7 @@ def scrape():
     browser.is_element_present_by_tag('div', wait_time=3)
 
     # create beautifulsoup object
-    soup = BeautifulSoup(browser.html, 'html.parser')
+    soup = bs.BeautifulSoup(browser.html, 'html.parser')
 
     # localate the first tweet and extract text from it
     mars_weather = soup.find('div', class_='js-tweet-text-container').text.split('\n')[1]
@@ -143,7 +143,7 @@ def scrape():
     browser.is_element_present_by_tag('div', wait_time=3)
 
     # create beautifulsoup object
-    soup = BeautifulSoup(browser.html, 'html.parser')
+    soup = bs.BeautifulSoup(browser.html, 'html.parser')
 
     # find section with images on the page
     div = soup.find('div', class_='results').findAll('div', class_='description')
@@ -162,7 +162,7 @@ def scrape():
         browser.visit(url+u)
         #check if the page has been loaded
         browser.is_element_present_by_tag('div', wait_time=3)
-        soup = BeautifulSoup(browser.html, 'html.parser')
+        soup = bs.BeautifulSoup(browser.html, 'html.parser')
 
         # find and extract links to images
         links = soup.find('div', class_='downloads').findAll('a')
@@ -185,4 +185,4 @@ def scrape():
 
     return results
 
-#print(scrape())
+# print(scrape())

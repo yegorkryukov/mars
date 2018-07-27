@@ -18,6 +18,7 @@ app = Flask(__name__)
 @app.route('/')
 def index(rerender=False):
     data = collection.find_one()
+    print(f'Data: {data["news_date"]}')
     #extract table html from string
     table = data['facts_table']
     #replace class and other style params to pickup bootstrap
